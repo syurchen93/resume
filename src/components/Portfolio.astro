@@ -46,6 +46,7 @@ const groups = isGo
     ? (de ? [['PHP & Frameworks','PHP · Symfony · REST APIs'],['Architektur','OOP · SOLID · DDD · GitFlow'],['Tests','PHPUnit · Testify'],['Daten & Messaging','MySQL · Redis · RabbitMQ · AWS SQS · BigQuery'],['Cloud & Infrastruktur','Docker · Kubernetes · CI/CD · Helm · Terraform']] : [['PHP & frameworks','PHP · Symfony · REST APIs'],['Architecture','OOP · SOLID · DDD · GitFlow'],['Testing','PHPUnit · Testify'],['Data & messaging','MySQL · Redis · RabbitMQ · AWS SQS · BigQuery'],['Cloud & infrastructure','Docker · Kubernetes · CI/CD · Helm · Terraform']])
     : (de ? [['Programmierung','PHP · Go · Python · JavaScript'],['Frameworks & Tests','Symfony · PHPUnit · Testify'],['Daten & Messaging','MySQL · Redis · RabbitMQ · AWS SQS · BigQuery'],['Cloud & Infrastruktur','Docker · Kubernetes · CI/CD · Helm · Terraform'],['Architektur','OOP · SOLID · DDD · GitFlow · REST APIs']] : [['Programming','PHP · Go · Python · JavaScript'],['Frameworks & testing','Symfony · PHPUnit · Testify'],['Data & messaging','MySQL · Redis · RabbitMQ · AWS SQS · BigQuery'],['Cloud & infrastructure','Docker · Kubernetes · CI/CD · Helm · Terraform'],['Architecture','OOP · SOLID · DDD · GitFlow · REST APIs']]);
 const basePath = `/${lang}/`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const focusedPath = (role) => `/${lang}/${role}/`;
 const localePath = (targetLang) => focus === 'all' ? `/${targetLang}/` : `/${targetLang}/${focus}/`;
 const displayedProjects = isPhp ? [projects[1], projects[2], projects[0]] : projects;
@@ -58,7 +59,7 @@ const displayedJobs = focus === 'all' ? jobs : jobs.map(job => ({ ...job, points
 ---
 <!doctype html>
 <html lang={de ? 'de' : 'en'}>
-  <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content={`${title} · Sergei Iurchenko, Munich`}/><title>Sergei Iurchenko — {title}</title></head>
+  <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content={`${title} · Sergei Iurchenko, Munich`}/><link rel="canonical" href={canonicalUrl.href}/><title>Sergei Iurchenko — {title}</title></head>
   <body>
     <main class="wrap">
       <nav class="topbar"><a class="brand" href={basePath}>{t.home}<span aria-hidden="true"> / SI</span></a><div class="focus-links"><a class={focus==='all'?'active':''} href={basePath}>{t.overview}</a><a class={isGo?'active':''} href={focusedPath('go')}>{t.goFocus}</a><a class={isPhp?'active':''} href={focusedPath('php')}>{t.phpFocus}</a></div><div class="lang"><a class={de?'active':''} href={localePath('de')}>DE</a><a class={!de?'active':''} href={localePath('en')}>EN</a></div></nav>
