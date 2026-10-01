@@ -47,6 +47,9 @@ const groups = isGo
     : (de ? [['Programmierung','PHP · Go · Python · JavaScript'],['Frameworks & Tests','Symfony · PHPUnit · Testify'],['Daten & Messaging','MySQL · Redis · RabbitMQ · AWS SQS · BigQuery'],['Cloud & Infrastruktur','Docker · Kubernetes · CI/CD · Helm · Terraform'],['Architektur','OOP · SOLID · DDD · GitFlow · REST APIs']] : [['Programming','PHP · Go · Python · JavaScript'],['Frameworks & testing','Symfony · PHPUnit · Testify'],['Data & messaging','MySQL · Redis · RabbitMQ · AWS SQS · BigQuery'],['Cloud & infrastructure','Docker · Kubernetes · CI/CD · Helm · Terraform'],['Architecture','OOP · SOLID · DDD · GitFlow · REST APIs']]);
 const basePath = `/${lang}/`;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const previewImageUrl = new URL('/portrait.png', Astro.site);
+const pageTitle = `Sergei Iurchenko — ${title}`;
+const pageDescription = `${title} · Sergei Iurchenko, Munich`;
 const focusedPath = (role) => `/${lang}/${role}/`;
 const localePath = (targetLang) => focus === 'all' ? `/${targetLang}/` : `/${targetLang}/${focus}/`;
 const displayedProjects = isPhp ? [projects[1], projects[2], projects[0]] : projects;
@@ -59,7 +62,23 @@ const displayedJobs = focus === 'all' ? jobs : jobs.map(job => ({ ...job, points
 ---
 <!doctype html>
 <html lang={de ? 'de' : 'en'}>
-  <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content={`${title} · Sergei Iurchenko, Munich`}/><link rel="canonical" href={canonicalUrl.href}/><title>Sergei Iurchenko — {title}</title></head>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="description" content={pageDescription}/>
+    <link rel="canonical" href={canonicalUrl.href}/>
+    <title>{pageTitle}</title>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content={canonicalUrl.href}/>
+    <meta property="og:title" content={pageTitle}/>
+    <meta property="og:description" content={pageDescription}/>
+    <meta property="og:image" content={previewImageUrl.href}/>
+    <meta property="og:image:type" content="image/png"/>
+    <meta property="og:image:width" content="976"/>
+    <meta property="og:image:height" content="1202"/>
+    <meta property="og:image:alt" content="Portrait of Sergei Iurchenko"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+  </head>
   <body>
     <main class="wrap">
       <nav class="topbar"><a class="brand" href={basePath}>{t.home}<span aria-hidden="true"> / SI</span></a><div class="focus-links"><a class={focus==='all'?'active':''} href={basePath}>{t.overview}</a><a class={isGo?'active':''} href={focusedPath('go')}>{t.goFocus}</a><a class={isPhp?'active':''} href={focusedPath('php')}>{t.phpFocus}</a></div><div class="lang"><a class={de?'active':''} href={localePath('de')}>DE</a><a class={!de?'active':''} href={localePath('en')}>EN</a></div></nav>
