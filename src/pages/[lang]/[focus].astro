@@ -1,0 +1,15 @@
+---
+import Portfolio from '../../components/Portfolio.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'de', focus: 'go' } },
+    { params: { lang: 'de', focus: 'php' } },
+    { params: { lang: 'en', focus: 'go' } },
+    { params: { lang: 'en', focus: 'php' } },
+  ];
+}
+
+const { lang, focus } = Astro.params;
+---
+<Portfolio lang={lang} focus={focus} />
